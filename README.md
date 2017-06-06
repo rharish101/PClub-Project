@@ -13,3 +13,6 @@ Contents
 * *word2vec.py* : Implementation of the Word2Vec model using gensim (depends on a file that I've not uploaded, so won't run as it is)
 * MNIST\_Data : Contains data of MNIST
 * cifar10-batches-py : Contains data of CIFAR-10
+
+**Notes**:
+My solutions to the programming assignments related to the Coursera course are on a separate public repository.
