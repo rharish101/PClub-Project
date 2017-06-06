@@ -15,4 +15,4 @@ Contents
 * cifar10-batches-py : Contains data of CIFAR-10
 
 **Notes**:
-My solutions to the programming assignments related to the Coursera course are on a separate public repository.
+* My solutions to the programming assignments related to the Coursera course are on a separate public repository.
