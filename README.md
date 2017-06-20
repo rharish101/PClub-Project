@@ -5,6 +5,7 @@ Contents
 --------
 * *Team-Documentation.pdf* : The .pdf file for the documentation of the team's overall progress and work so far.
 * *Team-Documentation.tex* : The .tex file used to create *Team-Documentation.pdf*
+* *Presentation.pptx* : The mid-term presentation for the project
 * *Documentation.pdf* : The .pdf file for my personal documentation of my progress and work so far.
 * *Documentation.tex* : The .tex file used to create *Documentation.pdf*
 * *parse\_out\_email\_text.py* : Udacity NLP HW - parses an email text, stems words, removes stopwords and returns the text, using NLTK.
