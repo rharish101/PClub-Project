@@ -14,7 +14,7 @@ def export():
         data.append([string for string in tweet.split('"') if string not in [
                      '', ',']])
     data_file.close()
-    labels = [tweet[0] for tweet in data]
+    labels = [(float(tweet[0]) / 4) for tweet in data]
     tweets = [tweet[-1] for tweet in data]
 
     print "Preprocessing data..."
@@ -43,5 +43,24 @@ def export():
     del backup_tweets
     del backup_labels
 
-    return (tweets, labels)
+    num_bigrams = 0
+    for i in range(len(tweets)):
+        for j in range(len(tweets[i]) - 1):
+            num_bigrams += 1
+    bigram_tweets = np.array([['qwertyuiop'.decode('ISO-8859-1'),
+                               'qwertyuiop'.decode('ISO-8859-1')] for i in\
+                               range(num_bigrams)])
+    bigram_labels = []
+    counter = 0
+    print "Generating bigrams..."
+    for i in range(len(tweets)):
+        for j in range(len(tweets[i]) - 1):
+            bigram_tweets[counter] = np.array([tweets[i][j], tweets[i][j + 1]])
+            bigram_labels.append(labels[i])
+            counter += 1
+    bigram_labels = np.array(bigram_labels)
+    del tweets
+    del labels
+
+    return (bigram_tweets, bigram_labels)
 
