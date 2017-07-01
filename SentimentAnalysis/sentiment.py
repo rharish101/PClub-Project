@@ -14,7 +14,7 @@ def export():
         data.append([string for string in tweet.split('"') if string not in [
                      '', ',']])
     data_file.close()
-    labels = np.array([tweet[0] for tweet in data])
+    labels = [tweet[0] for tweet in data]
     tweets = [tweet[-1] for tweet in data]
 
     print "Preprocessing data..."
@@ -28,13 +28,20 @@ def export():
                                  )).strip().split())
         else:
             tweets[i] = pro_tweet
-    backup = np.array(tweets)
+
+    print "Cleaning data..."
+    backup_tweets = np.array(tweets)
+    backup_labels = np.array(labels)
     tweets = []
-    for tweet in backup:
+    labels = []
+    for i, tweet in enumerate(backup_tweets):
         if len(tweet) >= 2:
             tweets.append(tweet)
+            labels.append(backup_labels[i])
     tweets = np.array(tweets)
-    del backup
+    labels = np.array(labels)
+    del backup_tweets
+    del backup_labels
 
     return (tweets, labels)
 
