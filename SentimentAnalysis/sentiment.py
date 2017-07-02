@@ -50,16 +50,16 @@ def export(type_data='train'):
 
     return (tweets, labels)
 
-def bigrams(tweets=None, labels=None, wv_model=None):
+def bigrams(tweets=None, labels=None, wv_model=None, type_data='train'):
     if not tweets and not labels:
-        tweets, labels = export()
+        tweets, labels = export(type_data)
     elif tweets and labels:
         pass
     else:
         print "One of tweets or labels given, but not the other"
         return
     if not wv_model:
-        wv_model = word2vec(tweets)
+        wv_model = get_word2vec(tweets)
 
     # Shuffle the dataset
     data = zip(tweets, labels)
@@ -102,7 +102,7 @@ def create_word2vec(tweets):
     print "Model saved"
     return wv_model
 
-def word2vec(tweets=None):
+def get_word2vec(tweets=None):
     if 'model_word2vec' in os.listdir('.'):
         response = raw_input('Word2Vec model found. Do you want to load it?'\
                              '(Y/n): ')
@@ -133,7 +133,7 @@ def create_nn():
 
     return nn_model
 
-def nn():
+def get_nn():
     if 'model_nn.h5' in os.listdir('.'):
         response = raw_input('Neural network model found. Do you want to load'\
                              'it? (Y/n): ')
@@ -146,4 +146,27 @@ def nn():
             return nn_model
     else:
         return create_nn()
+
+# TODO: Test this:
+def train_nn(tweets=None, labels=None, nn_model=None):
+    if not tweets and not labels:
+        tweets, labels = bigrams()
+    elif tweets and labels:
+        pass
+    else:
+        print "One of tweets or labels given, but not the other"
+        return
+    if not nn_model:
+        nn_model = get_nn()
+
+    # Callbacks (extra features)
+    tb_callback = TensorBoard(log_dir='/home/rharish/Programs/Python/OCR'\
+                            '/Tensorboard/' + str(time.time()))
+    early_stop = EarlyStopping(monitor='loss', min_delta=0.1, patience=10)
+    lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
+                                patience=3, epsilon=0.2)
+
+    nn_model.fit(tweets, labels, epochs=10, batch_size=100, callbacks=
+                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
+    nn_model.save('model_nn.h5')
 
