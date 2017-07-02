@@ -8,6 +8,8 @@ from gensim.models.word2vec import Word2Vec
 from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.layers.recurrent import LSTM
+from keras.callbacks import TensorBoard, EarlyStopping, ReduceLROnPlateau
+import time
 
 def export(type_data='train'):
     print "Extracting data..."
@@ -128,7 +130,7 @@ def create_nn():
     nn_model.add(Dense(64, activation='relu'))
     nn_model.add(Dense(1, activation='sigmoid'))
 
-    nn_model.compile(loss='categorical_crossentropy', optimizer='rmsprop',
+    nn_model.compile(loss='binary_crossentropy', optimizer='rmsprop',
                      metrics=['accuracy'])
 
     print "Created neural network model"
