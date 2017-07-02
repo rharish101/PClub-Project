@@ -86,7 +86,7 @@ def bigrams(tweets=None, labels=None, wv_model=None, type_data='train'):
     bigram_labels = np.array(bigram_labels)
     del tweets
     del labels
-    del model
+    del wv_model
 
     return (bigram_tweets, bigram_labels)
 
@@ -131,6 +131,7 @@ def create_nn():
     nn_model.compile(loss='categorical_crossentropy', optimizer='rmsprop',
                      metrics=['accuracy'])
 
+    print "Created neural network model"
     return nn_model
 
 def get_nn():
