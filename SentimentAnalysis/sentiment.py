@@ -9,10 +9,13 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.layers.recurrent import LSTM
 
-def export():
+def export(type_data='train'):
     print "Extracting data..."
-    data_file = codecs.open('Sentiment140/training.1600000.processed.'
-                            'noemoticon.csv', encoding='ISO-8859-1')
+    if type_data.lower() == 'train':
+        filename = 'training.1600000.processed.noemoticon.csv'
+    elif type_data.lower() == 'test':
+        filename = 'testdata.manual.2009.06.14.csv'
+    data_file = codecs.open('Sentiment140/' + filename, encoding='ISO-8859-1')
     data = []
     for tweet in data_file.read().split('\n')[:-1]:
         data.append([string for string in tweet.split('"') if string not in [
