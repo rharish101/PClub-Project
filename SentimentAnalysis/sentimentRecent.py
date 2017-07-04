@@ -105,10 +105,11 @@ def init_with_wv(tweets=None, labels=None, wv_model=None, type_data='train'):
             if word in wv_model.wv.vocab.keys():
                 current_tweet.append(wv_model.wv[word])
         if len(current_tweet) < max_tweet_len:
-            current_tweet_len
+            current_tweet_len = len(current_tweet)
             for i in range(max_tweet_len - current_tweet_len):
                 current_tweet.append(np.zeros(100))
         tweets_wv.append(current_tweet).keys()
+    print "Replaced words with word vectors"
     tweets_wv = np.array(tweets_wv)
     del tweets
     return (tweets_wv, labels)
