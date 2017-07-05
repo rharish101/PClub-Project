@@ -104,8 +104,6 @@ def init_with_wv(tweets=None, labels=None, wv_model=None, type_data='train'):
             max_tweet_len = len(tweet)
     vocab = wv_model.wv.vocab.keys()
     for tweet_num, tweet in enumerate(tweets):
-        sys.stdout.write("\r%d tweet(s) being replaced out of %d\r" % (
-                         tweet_num + 1, len(tweets)))
         sys.stdout.flush()
         current_tweet = []
         for word in tweet:
@@ -116,6 +114,8 @@ def init_with_wv(tweets=None, labels=None, wv_model=None, type_data='train'):
             for i in range(max_tweet_len - current_tweet_len):
                 current_tweet.append(np.zeros(100))
         tweets_wv.append(current_tweet)
+        sys.stdout.write("\r%d tweet(s) replaced out of %d\r" % (
+                         tweet_num + 1, len(tweets)))
     print "\nReplaced words with word vectors"
     tweets_wv = np.array(tweets_wv)
     del tweets
