@@ -5,10 +5,10 @@ except NameError:
    	pass
 
 def max(a,b):
-	if(a>b)
+	if(a>b):
 		max = a
 	else
-		max = b 
+		max = b
 
 def friends():
 	response = input('How are your friends meeting up with your expectations?\n')
@@ -45,7 +45,7 @@ def sad2():
 		if(response == positive)
 			print("I'm gld that you realised that the opposite could be true.Best of luck for your future endeavours.Bye!")
 		else:
-			sad4()				
+			sad4()
 def sad():
 	response = input('Mild sympathy.Is this serious?\n')
 	if(response == positive):
@@ -68,7 +68,7 @@ def sad3():
 	
 print('introduction')
 name = input('What's your name?')
-print('how are you feeling?') 
+print('how are you feeling?')
 response = input()
 if (response == positive):
 	print('That's good! Are you really this happy?')
