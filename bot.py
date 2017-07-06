@@ -15,19 +15,19 @@ def friends():
 			print(name + ", don't feel sad. Take your time and heal properly, look at what's happened, learn from it, and find ways to build a new and healthy life.\nAll any of us wants is to be happy. For some, this requires the perfect person to be our other half, and for others, it means completing the equation yourself. Either way, to find the right person, you need to be the right person. And trust that in the long run, your efforts will lead to your own personal happy ending.")
 			print(finisher)
 		else:
-			print(name + ", don't worry. You may be at a point where similar people are not in your life right now. That happens in life from time to time.\nIt is better to be away from incompatible people, and those people are attracted to you when you pretend to be someone you aren't.")
+			print(name + ", don't worry. You may be at a point where similar people are not in your life right now. That happens in life from time to time.\nIt is better to be away from incompatible people, and those people are attracted to you when you pretend to be someone you aren't.\nBe as different as you trully are, get to know yourself at a deep level,esteem your individulaity, interact with pepole honestly, and eventually the people who appreciate you will notice and be drawn in.")
 			print(finisher)
 	else:
-		print("Many people tend to expect too much of others: their family, their friends or even just acquaintances. It's a usual mistake: people don’t think exactly the way you do.\nDon't let the opinions of others make you forget what you deserve. You are not in this world to live up to the expectations of others, nor should you feel that others are here to live up to yours.\nThe first step you should take if you want to learn how to stop expecting too much from people is to simply realize and accept the fact that nobody’s perfect and that everyone makes mistakes every now and then.")
+		print("Many people tend to expect too much of others, their family, their friends or even just acquaintances. It's a usual mistake, people don't think exactly the way you do.\nDon't let the opinions of others make you forget what you deserve. You are not in this world to live up to the expectations of others, nor should you feel that others are here to live up to yours.\nThe first step you should take if you want to learn how to stop expecting too much from people is to simply realize and accept the fact that nobody is perfect and that everyone makes mistakes every now and then.")
 		print(finisher)
 		
 def family():
-    print(name+",don't take too much stress.I can list some really cool ways to handle it like you should develop healthy responses which include doing regular exercise and taking good quality sleep.\nYou should have clear boundaries between your work life and home life so you make sure that you don't mix them and tecniques such as meditation, deep breathing exercises and mindfulness can be really helping in relieving stress.")
+    print('A4')
     print(finisher)
 
 
 def work():
-   print('A5')
+   print(name+", don't take too much stress.I can list some really cool ways to handle it. You should develop healthy responses which include doing regular exercise and taking good quality sleep.\nYou should have clear boundaries between your work life and home life so you make sure that you don't mix them and tecniques such as meditation, deep breathing exercises and mindfulness can be really helping in relieving stress.\n  Always take time to recharge so as to avoid the negative effects of chronic stress and burnout, we need time to replenish and return to our pre-stress level of functioning.\n This recovery process requires switching off from work by having periods of time when you are neither engaging in work-related activities, nor thinking about work. That's why it's critical that you disconnect from time to time, in a way that fits your needs and preferences.")
    print(finisher)
 		
 
@@ -36,12 +36,12 @@ def sad4():
 	response_friends = input('How are things going on with your friends?\n')
 	response_family  = input('How is your relationship with your parents?\n')
 	response_worklife = input('How is your work or academic life going on?\n')
-	if(response_friends == 'friends'):
+	if(response_friends != 'friends'):
 		friends()
 	else:
-		if(response_family == 'family'):
+		if(response_family != 'family'):
 			family()
-		elif(response_worklife=='work'):
+		else:
 			work()
 def sad2():
 	response = input('Please feel free to share your feelings ' + name + ', think of me as your friend.\n')
