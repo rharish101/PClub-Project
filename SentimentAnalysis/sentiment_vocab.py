@@ -96,10 +96,10 @@ def init_with_vocab(tweets=None, labels=None, vocab=None, type_data='train'):
         vocab = get_vocab()
 
     print "Replacing words with vocabulary numbers..."
-    max_tweet_len = max([len(tweet) for tweet in tweets])
-    #numbered_tweets = [[(vocab.token2id[word] + 1) for word\
-                        #in tweet if word in vocab.token2id]\
-                        #for tweet in tweets]
+    if type_data == 'train':
+        max_tweet_len = max([len(tweet) for tweet in tweets])
+    else:
+        max_tweet_len = 40 #Empirically obtained :P
     numbered_tweets = []
     for tweet_num, tweet in enumerate(tweets):
         current_tweet = []
@@ -172,6 +172,10 @@ def train_nn(tweets=None, labels=None, nn_model=None):
 
     nn_model.fit(tweets, labels, epochs=50, batch_size=100, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
+    del tweets
+    del labels
+    tweets_test, labels_test, _ = init_with_vocab(type_data='test')
+    print nn_model.evaluate(tweets_test, labels_test, batch_size=100)
     nn_model.save('model_nn.h5')
 
 train_nn()
