@@ -1,35 +1,38 @@
-#!/bin/python
 from __future__ import print_function
+from gensim.parsing.preprocessing import preprocess_string
 try:
    	input = raw_input
 except NameError:
    	pass
+
+finisher = 'finisher'
 
 def friends():
 	response = input('How are your friends meeting up with your expectations?\n')
 	if(response == 'positive'):
 		response = input('Have you broken up with someone recently?\n')
 		if(response == 'positive'):
-			print('A3')
-			print('finisher')
+			print(name + ", don't feel sad. Take your time and heal properly, look at what's happened, learn from it, and find ways to build a new and healthy life.\nAll any of us wants is to be happy. For some, this requires the perfect person to be our other half, and for others, it means completing the equation yourself. Either way, to find the right person, you need to be the right person. And trust that in the long run, your efforts will lead to your own personal happy ending.")
+			print(finisher)
 		else:
-			print('A2')
-			print('finisher')
+			print(name + ", don't worry. You may be at a point where similar people are not in your life right now. That happens in life from time to time.\nIt is better to be away from incompatible people, and those people are attracted to you when you pretend to be someone you aren't.")
+			print(finisher)
 	else:
-		print('A1')
-		print('finisher')
+		print("Many people tend to expect too much of others: their family, their friends or even just acquaintances. It's a usual mistake: people don’t think exactly the way you do.\nDon't let the opinions of others make you forget what you deserve. You are not in this world to live up to the expectations of others, nor should you feel that others are here to live up to yours.\nThe first step you should take if you want to learn how to stop expecting too much from people is to simply realize and accept the fact that nobody’s perfect and that everyone makes mistakes every now and then.")
+		print(finisher)
 		
 def family():
-    print('A4')
-    print('finisher')
+    print(name+",don't take too much stress.I can list some really cool ways to handle it like you should develop healthy responses which include doing regular exercise and taking good quality sleep.\nYou should have clear boundaries between your work life and home life so you make sure that you don't mix them and tecniques such as meditation, deep breathing exercises and mindfulness can be really helping in relieving stress.")
+    print(finisher)
 
 
 def work():
    print('A5')
-   print('finisher')
+   print(finisher)
 		
 
 def sad4():
+	print("My sympathies. Looks like it might be a point of concern. Don't worry, that's what I'm here for!")
 	response_friends = input('How are things going on with your friends?\n')
 	response_family  = input('How is your relationship with your parents?\n')
 	response_worklife = input('How is your work or academic life going on?\n')
@@ -38,55 +41,62 @@ def sad4():
 	else:
 		if(response_family == 'family'):
 			family()
-		else:
+		elif(response_worklife=='work'):
 			work()
 def sad2():
-	response = input('Please share your feelings?\n')
+	response = input('Please feel free to share your feelings ' + name + ', think of me as your friend.\n')
 	if(response == 'positive'):
-		response = input('Among the thoughts occuring in your mind which one upsets you the most?\n')
+		response = input('I see. Among the thoughts occuring in your mind, which one upsets you the most?\n')
 		response = input('Why do you think it upsets you?\n')
-		# response = input('COPY FROM counselling connection.com)
-		response = input('Are there signs that contrary could be true?\n')
+	        print("Okay. You just identified what we call an automatic thought. Everyone has them. They are thoughts that immediately pop to mind without any effort on your part.\nMost of the time the thought occurs so quickly you don't notice it but it has an impact on your emotions. It's usually the emotion that you notice, rather than the thought.\nOften these automatic thoughts are distorted in some way but we usually don't stop to question the validity of the thought. But today, that's what we are going to do.")
+		response = input('So, ' + name + ', are there signs that contrary could be true?\n')
 		if(response == 'positive'):
-			print("I'm gld that you realised that the opposite could be true.Best of luck for your future endeavours.Bye!")
+			print("I'm glad that you realised that the opposite could be true. The reason these are called 'false beliefs' is because they are extreme ways of perceiving the world. They are black or white and ignore the shades of grey in between.\nNow that you have learned about this cool technique, you can apply it on most of the problems that you will face. If you still feel stuck at any point, you can always chat with me.\nBest of luck for your future endeavours. Bye!")
 		else:
 			sad4()
-def sad():
-	response = input('Mild sympathy.Is this serious?\n')
+
+        else:
+            sad4()
+           
+def sad1():
+	response = input('I understand. Seems like something\'s bothering you. Could you describe it in short?\n')
 	if(response == 'positive'):
-		response = input('Do you really need help?\n')
+		response = input('Do you really need help?\n') ##
 		if(response == 'positive'):
-			print('bye!bye')
+			print("That's okay. It was nice talking to you. You can chat with me anytime you want.\n Bye" + name + "!")
 		else:
 			sad3()
 	else:
 		sad2()
 
 def sad3():
-	response = input('Feel comfortable.Could you breifly explain about your day?\n')
+	response = input('Feel comfortable. Could you briefly explain about your day?\n')
 	response = input('What are the activities that make up your most of the day?\n')
-	response = input('It seems you are comfortable talking about yourself.Could you share your feelings?\n')
+	response = input('It looks like you are comfortable talking about yourself. Could you share your feelings?\n')
 	if(response == 'positive'):
 		sad2()
 	else:
 		sad4()
 	
-print('introduction')
-name = input('What is your name?\n')
-response = input('how are you feeling?\n')
+print('Hello! Thanks for coming here. I am a chatbot. People say that I am a kind and approachable bot.')
+name = input('Please tell me your name.\n')
+name = [word for word in preprocess_string(name) if word not in ('name', 'peopl', 'call', 'friend')][0]
+name = name[0].upper() + name[1:]
+print("Hi " + name + "! My name's Brad. Let's start with our session.")
+response = input("How are you doing?\n")
 if (response == 'positive'):
-	response = input('That is good! Are you really this happy?\n')
+	response = input('That is good. Are you usually this happy?\n') ##
 	if (response == 'positive'):
-		response = input('You seem to be really happy.Wanna sign off?\n')
+		response = input('You seem to be really content. Wanna sign off?\n')
 		if(response == 'positive'):
-			print('bye bye!')
+			print('Ok, bye ' + name + '!')
 		else:
-			response = input('Is this really something bothering you?')
+			response = input('Is there something bothering you?') ##
 			if(response == 'positive'):
-				print('bye!bye')
+				print("That's okay. It was nice talking to you. You can chat with me anytime you want.\n Bye" + name + "!")
 			else:
-				sad()
+				sad1()
 	else:
-		sad()
+		sad1()
 else:
 	sad3()
