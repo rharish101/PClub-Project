@@ -10,6 +10,7 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.layers.recurrent import LSTM
 from keras.layers.embeddings import Embedding
+from keras.layers.advanced_activations import LeakyReLU
 from keras.callbacks import TensorBoard, EarlyStopping, ReduceLROnPlateau
 import time
 
@@ -54,6 +55,11 @@ def export(type_data='train'):
             labels.append(backup_labels[i])
     del backup_tweets
     del backup_labels
+
+    # Shuffle the dataset
+    data = zip(tweets, labels)
+    np.random.shuffle(data)
+    tweets, labels = zip(*data)
 
     return (tweets, labels)
 
@@ -122,7 +128,8 @@ def create_nn(vocab_len=None, max_tweet_len=None):
     nn_model.add(Embedding(input_dim=(vocab_len + 1), output_dim=100,
                            mask_zero=True))
     nn_model.add(LSTM(128))
-    nn_model.add(Dense(64, activation='sigmoid'))
+    nn_model.add(Dense(64))
+    nn_model.add(LeakyReLU())
     nn_model.add(Dense(1, activation='sigmoid'))
 
     nn_model.compile(loss='binary_crossentropy', optimizer=
@@ -163,7 +170,7 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=3, epsilon=0.2)
 
-    nn_model.fit(tweets, labels, epochs=10, batch_size=100, callbacks=
+    nn_model.fit(tweets, labels, epochs=50, batch_size=100, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
 
