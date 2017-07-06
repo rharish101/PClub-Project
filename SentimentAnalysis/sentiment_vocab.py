@@ -172,11 +172,11 @@ def train_nn(tweets=None, labels=None, nn_model=None):
 
     nn_model.fit(tweets, labels, epochs=50, batch_size=100, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
+    nn_model.save('model_nn.h5')
     del tweets
     del labels
     tweets_test, labels_test, _ = init_with_vocab(type_data='test')
     print nn_model.evaluate(tweets_test, labels_test, batch_size=100)
-    nn_model.save('model_nn.h5')
 
 train_nn()
 
