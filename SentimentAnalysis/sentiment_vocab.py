@@ -25,7 +25,7 @@ def export(type_data='train'):
         data.append([string for string in tweet.split('"') if string not in [
                     '', ',']])
     data_file.close()
-    labels = [(float(tweet[0]) / 4) for tweet in data]
+    labels = [(float(tweet[0]) / 4.0) for tweet in data]
     tweets = [tweet[-1] for tweet in data]
 
     print "Preprocessing data..."
@@ -90,13 +90,21 @@ def init_with_vocab(tweets=None, labels=None, vocab=None, type_data='train'):
         vocab = get_vocab()
 
     print "Replacing words with vocabulary numbers..."
-    max_tweet_len = 0
-    for tweet in tweets:
-        if len(tweet) > max_tweet_len:
-            max_tweet_len = len(tweet)
-    numbered_tweets = [[(vocab.token2id[word] + 1) for word\
-                        in tweet if word in vocab.token2id]\
-                        for tweet in tweets]
+    max_tweet_len = max([len(tweet) for tweet in tweets])
+    #numbered_tweets = [[(vocab.token2id[word] + 1) for word\
+                        #in tweet if word in vocab.token2id]\
+                        #for tweet in tweets]
+    numbered_tweets = []
+    for tweet_num, tweet in enumerate(tweets):
+        current_tweet = []
+        for word in tweet:
+            if word in vocab:
+                current_tweet.append(vocab.token2id[word] + 1)
+        if len(current_tweet) < max_tweet_len:
+            current_tweet_len = len(current_tweet)
+            for i in range(max_tweet_len - current_tweet_len):
+                current_tweet.append(0)
+        numbered_tweets.append(current_tweet)
     print "Replaced words with vocabulary numbers"
     del tweets
     labels = np.array(labels)
@@ -138,15 +146,15 @@ def get_nn(vocab_len=None, max_tweet_len=None):
         return create_nn(vocab_len, max_tweet_len)
 
 def train_nn(tweets=None, labels=None, nn_model=None):
-    if not tweets and not labels:
+    if tweets is None and labels is None:
         tweets, labels, vocab_len = init_with_vocab()
-    elif tweets and labels:
+    elif tweets is not None and labels is not None:
         pass
     else:
         print "One of tweets or labels given, but not the other"
         return
-    max_tweet_len = max([len(tweet) for tweet in tweets])
     if not nn_model:
+        max_tweet_len = max([len(tweet) for tweet in tweets])
         nn_model = get_nn(vocab_len, max_tweet_len)
 
     # Callbacks (extra features)
@@ -159,5 +167,5 @@ def train_nn(tweets=None, labels=None, nn_model=None):
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
 
-#train_nn()
+train_nn()
 
