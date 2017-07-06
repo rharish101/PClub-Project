@@ -1,3 +1,4 @@
+#!/bin/python2
 from __future__ import print_function
 from gensim.parsing.preprocessing import preprocess_string
 try:
