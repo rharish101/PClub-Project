@@ -11,6 +11,7 @@ from keras.layers import Dense
 from keras.layers.recurrent import LSTM
 from keras.layers.embeddings import Embedding
 from keras.layers.advanced_activations import LeakyReLU
+from keras.optimizers import SGD
 from keras.callbacks import TensorBoard, EarlyStopping, ReduceLROnPlateau
 import time
 
@@ -125,15 +126,14 @@ def create_nn(vocab_len=None, max_tweet_len=None):
         return
 
     nn_model = Sequential()
-    nn_model.add(Embedding(input_dim=(vocab_len + 1), output_dim=100,
+    nn_model.add(Embedding(input_dim=(vocab_len + 1), output_dim=32,
                            mask_zero=True))
     nn_model.add(LSTM(128))
-    nn_model.add(Dense(64))
-    nn_model.add(LeakyReLU())
     nn_model.add(Dense(1, activation='sigmoid'))
 
-    nn_model.compile(loss='binary_crossentropy', optimizer=
-                     'rmsprop', metrics=['accuracy'])
+    opt = SGD(lr=0.01, momentum = 0.9, nesterov=True)
+    nn_model.compile(loss='binary_crossentropy', optimizer=opt, metrics=[
+                     'accuracy'])
 
     print "Created neural network model"
     return nn_model
@@ -141,9 +141,9 @@ def create_nn(vocab_len=None, max_tweet_len=None):
 def get_nn(vocab_len=None, max_tweet_len=None):
     if 'model_nn.h5' in os.listdir('.'):
         response = raw_input('Neural network model found. Do you want to load'\
-                            'it? (Y/n): ')
+                            ' it? (Y/n): ')
         if response.lower() in ['n', 'no', 'nah', 'nono', 'nahi', 'nein']:
-            return create_nn(vocab_len)
+            return create_nn(vocab_len, max_tweet_len)
         else:
             print "Loading model..."
             nn_model = load_model('model_nn.h5')
@@ -170,13 +170,13 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=3, epsilon=0.2)
 
-    nn_model.fit(tweets, labels, epochs=50, batch_size=100, callbacks=
+    nn_model.fit(tweets, labels, epochs=15, batch_size=100, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
     del tweets
     del labels
     tweets_test, labels_test, _ = init_with_vocab(type_data='test')
-    print nn_model.evaluate(tweets_test, labels_test, batch_size=100)
+    print nn_model.evaluate(tweets_test, labels_test, batch_size=32)
 
 train_nn()
 
