@@ -1,7 +1,4 @@
-# PClub-Project
-Programming Club IITK project on depression therapy using chatbot
-
-**Sentiment Analysis folder**
+# Sentiment Analysis folder
 
 Contents
 --------
