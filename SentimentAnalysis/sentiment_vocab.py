@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/bin/python2
 import os
 import codecs
 import sys
