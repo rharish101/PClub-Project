@@ -94,12 +94,11 @@ def init_with_vocab(tweets=None, labels=None, vocab=None, type_data='train'):
     for tweet in tweets:
         if len(tweet) > max_tweet_len:
             max_tweet_len = len(tweet)
-    numbered_tweets = np.array([np.array([(vocab.token2id[word] + 1)for word\
-                                          in tweet if word in vocab.token2id])\
-                                          for tweet in tweets])
+    numbered_tweets = [[(vocab.token2id[word] + 1) for word\
+                        in tweet if word in vocab.token2id]\
+                        for tweet in tweets]
     print "Replaced words with vocabulary numbers"
     del tweets
-    numbered_tweets = np.array(numbered_tweets)
     labels = np.array(labels)
     return (numbered_tweets, labels, len(vocab))
 
@@ -112,13 +111,13 @@ def create_nn(vocab_len=None, max_tweet_len=None):
         return
 
     nn_model = Sequential()
-    nn_model.add(Embedding(input_dim=vocab_len, output_dim=100,
+    nn_model.add(Embedding(input_dim=(vocab_len + 1), output_dim=100,
                            mask_zero=True))
-    nn_model.add(LSTM(128, input_shape=(max_tweet_len, 100)))
-    nn_model.add(Dense(64, activation='relu'))
+    nn_model.add(LSTM(128))
+    nn_model.add(Dense(64, activation='sigmoid'))
     nn_model.add(Dense(1, activation='sigmoid'))
 
-    nn_model.compile(loss='sparse_categorical_crossentropy', optimizer=
+    nn_model.compile(loss='binary_crossentropy', optimizer=
                      'rmsprop', metrics=['accuracy'])
 
     print "Created neural network model"
@@ -160,5 +159,5 @@ def train_nn(tweets=None, labels=None, nn_model=None):
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
 
-train_nn()
+#train_nn()
 
