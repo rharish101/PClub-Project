@@ -1,18 +1,22 @@
-#!/bin/python2
 from __future__ import print_function
 from gensim.parsing.preprocessing import preprocess_string
+from keras.models import load_model
 try:
    	input = raw_input
 except NameError:
    	pass
 
+model = load_model('SentimentAnalysis/model_nn.h5')
+def predict(tweet):
+	return 1
+
 finisher = 'finisher'
 
 def friends():
 	response = input('How are your friends meeting up with your expectations?\n')
-	if(response == 'positive'):
+	if(predict(response) >=0.4):
 		response = input('Have you broken up with someone recently?\n')
-		if(response == 'positive'):
+		if(predict(response)>=0.4):
 			print(name + ", don't feel sad. Take your time and heal properly, look at what's happened, learn from it, and find ways to build a new and healthy life.\nAll any of us wants is to be happy. For some, this requires the perfect person to be our other half, and for others, it means completing the equation yourself. Either way, to find the right person, you need to be the right person. And trust that in the long run, your efforts will lead to your own personal happy ending.")
 			print(finisher)
 		else:
@@ -37,21 +41,21 @@ def sad4():
 	response_friends = input('How are things going on with your friends?\n')
 	response_family  = input('How is your relationship with your parents?\n')
 	response_worklife = input('How is your work or academic life going on?\n')
-	if(response_friends != 'friends'):
+	if(predict(response_friends)<=0.3):
 		friends()
 	else:
-		if(response_family != 'family'):
+		if(predict(response_family)<=0.3):
 			family()
 		else:
 			work()
 def sad2():
 	response = input('Please feel free to share your feelings ' + name + ', think of me as your friend.\n')
-	if(response == 'positive'):
+	if(predict(response)>=0.3):
 		response = input('I see. Among the thoughts occuring in your mind, which one upsets you the most?\n')
 		response = input('Why do you think it upsets you?\n')
 	        print("Okay. You just identified what we call an automatic thought. Everyone has them. They are thoughts that immediately pop to mind without any effort on your part.\nMost of the time the thought occurs so quickly you don't notice it but it has an impact on your emotions. It's usually the emotion that you notice, rather than the thought.\nOften these automatic thoughts are distorted in some way but we usually don't stop to question the validity of the thought. But today, that's what we are going to do.")
 		response = input('So, ' + name + ', are there signs that contrary could be true?\n')
-		if(response == 'positive'):
+		if(predict(response)>=0.4):
 			print("I'm glad that you realised that the opposite could be true. The reason these are called 'false beliefs' is because they are extreme ways of perceiving the world. They are black or white and ignore the shades of grey in between.\nNow that you have learned about this cool technique, you can apply it on most of the problems that you will face. If you still feel stuck at any point, you can always chat with me.\nBest of luck for your future endeavours. Bye!")
 		else:
 			sad4()
@@ -61,9 +65,9 @@ def sad2():
            
 def sad1():
 	response = input('I understand. Seems like something\'s bothering you. Could you describe it in short?\n')
-	if(response == 'positive'):
+	if(predict(response)>=0.4):
 		response = input('Do you really need help?\n') ##
-		if(response == 'positive'):
+		if(predict(response)>=0.45):
 			print("That's okay. It was nice talking to you. You can chat with me anytime you want.\n Bye" + name + "!")
 		else:
 			sad3()
@@ -74,7 +78,7 @@ def sad3():
 	response = input('Feel comfortable. Could you briefly explain about your day?\n')
 	response = input('What are the activities that make up your most of the day?\n')
 	response = input('It looks like you are comfortable talking about yourself. Could you share your feelings?\n')
-	if(response == 'positive'):
+	if(predict(response)>=0.3):
 		sad2()
 	else:
 		sad4()
@@ -85,15 +89,15 @@ name = [word for word in preprocess_string(name) if word not in ('name', 'peopl'
 name = name[0].upper() + name[1:]
 print("Hi " + name + "! My name's Brad. Let's start with our session.")
 response = input("How are you doing?\n")
-if (response == 'positive'):
+if (predict(response) >=0.5):
 	response = input('That is good. Are you usually this happy?\n') ##
-	if (response == 'positive'):
+	if (predict(response)>=0.7):
 		response = input('You seem to be really content. Wanna sign off?\n')
-		if(response == 'positive'):
+		if(predict(response)>=0.8):
 			print('Ok, bye ' + name + '!')
 		else:
 			response = input('Is there something bothering you?') ##
-			if(response == 'positive'):
+			if(predict(response)>=0.9):
 				print("That's okay. It was nice talking to you. You can chat with me anytime you want.\n Bye" + name + "!")
 			else:
 				sad1()
