@@ -31,7 +31,7 @@ def predict(text):
     prediction /= len(txt_list)
     return prediction
 
-finisher = 'finisher'
+finisher = 'It was really nice talking to you and I hope that now you fell better after talking to me.\nBest of luck for your future endeavours.'
 
 def friends():
     response = input('How are your friends meeting up with your expectations?'\
@@ -73,7 +73,8 @@ def friends():
         print(finisher)
         
 def family():
-    print('A4')
+    print(name+",don't take too much stress all you need to do is adjust your priorities.Don’t take on unnecessary duties and responsibilities.\nTake advice from people whose opinion you trust, and get specific advice when issues arise.\nYou should use stress management techniques and always hope for the best as these situations arise in everyone's life and what matters the most is taking the right decision at such moments.
+")
     print(finisher)
 
 def work():
