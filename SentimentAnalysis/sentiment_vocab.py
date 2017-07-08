@@ -10,8 +10,6 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.layers.recurrent import LSTM
 from keras.layers.embeddings import Embedding
-from keras.layers.advanced_activations import LeakyReLU
-from keras.optimizers import SGD
 from keras.callbacks import TensorBoard, EarlyStopping, ReduceLROnPlateau
 import time
 
@@ -131,8 +129,7 @@ def create_nn(vocab_len=None, max_tweet_len=None):
     nn_model.add(LSTM(128))
     nn_model.add(Dense(1, activation='sigmoid'))
 
-    opt = SGD(lr=0.01, momentum = 0.9, nesterov=True)
-    nn_model.compile(loss='binary_crossentropy', optimizer=opt, metrics=[
+    nn_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=[
                      'accuracy'])
 
     print "Created neural network model"
@@ -170,13 +167,14 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=3, epsilon=0.2)
 
-    nn_model.fit(tweets, labels, epochs=15, batch_size=100, callbacks=
+    nn_model.fit(tweets, labels, epochs=2, batch_size=32, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
+    print "Saved model"
     del tweets
     del labels
     tweets_test, labels_test, _ = init_with_vocab(type_data='test')
     print nn_model.evaluate(tweets_test, labels_test, batch_size=32)
 
-#train_nn()
+train_nn()
 

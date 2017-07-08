@@ -38,6 +38,9 @@ def export(type_data='train'):
                         strip().split()
         else:
             tweets[i] = pro_tweet
+        sys.stdout.write("\r%d tweet(s) pre-processed out of %d\r" % (
+                        i + 1, len(tweets)))
+        sys.stdout.flush()
 
     print "Cleaning data..."
     backup_tweets = np.array(tweets)
@@ -51,10 +54,15 @@ def export(type_data='train'):
     del backup_tweets
     del backup_labels
 
+    # Shuffle the dataset
+    data = zip(tweets, labels)
+    np.random.shuffle(data)
+    tweets, labels = zip(*data)
+
     return (tweets, labels)
 
 def create_word2vec(tweets):
-    wv_model = Word2Vec(size=100, alpha=0.1, window=2, min_count=0, workers=8,
+    wv_model = Word2Vec(size=32, alpha=0.1, window=2, min_count=0, workers=8,
                      min_alpha=0.01)
     print "Created Word2Vec model\nBuilding vocabulary..."
     wv_model.build_vocab(tweets)
@@ -93,16 +101,19 @@ def init_with_wv(tweets=None, labels=None, wv_model=None, type_data='train'):
     else:
         print "One of tweets or labels given, but not the other"
         return
-    if not wv_model:
+    if not wv_model and type_data == 'train':
         wv_model = get_word2vec(tweets)
+    elif not wv_model:
+        wv_model = get_word2vec()
 
     print "Replacing words with word vectors..."
+    if type_data == 'train':
+        max_tweet_len = max([len(tweet) for tweet in tweets])
+    else:
+        max_tweet_len = 40 #Empirically obtained :P
     tweets_wv = []
-    max_tweet_len = 0
-    for tweet in tweets:
-        if len(tweet) > max_tweet_len:
-            max_tweet_len = len(tweet)
     vocab = wv_model.wv.vocab.keys()
+    # TODO: Replace following loop with tensorflow embedding lookup
     for tweet_num, tweet in enumerate(tweets):
         current_tweet = []
         for word in tweet:
@@ -117,8 +128,9 @@ def init_with_wv(tweets=None, labels=None, wv_model=None, type_data='train'):
                         tweet_num + 1, len(tweets)))
         sys.stdout.flush()
     print "\nReplaced words with word vectors"
-    tweets_wv = np.array(tweets_wv)
     del tweets
+    tweets_wv = np.array(tweets_wv)
+    labels = np.array(labels)
     return (tweets_wv, labels)
 
 def create_nn(max_tweet_len=None):
@@ -126,12 +138,11 @@ def create_nn(max_tweet_len=None):
         print "Error: Please specify max tweet length"
 
     nn_model = Sequential()
-    nn_model.add(LSTM(128, input_shape=(max_tweet_len, 100)))
-    nn_model.add(Dense(64, activation='relu'))
+    nn_model.add(LSTM(128, input_shape=(max_tweet_len, 32)))
     nn_model.add(Dense(1, activation='sigmoid'))
 
-    nn_model.compile(loss='binary_crossentropy', optimizer='rmsprop',
-                    metrics=['accuracy'])
+    nn_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=[
+                     'accuracy'])
 
     print "Created neural network model"
     return nn_model
@@ -158,8 +169,8 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     else:
         print "One of tweets or labels given, but not the other"
         return
-    max_tweet_len = max([len(tweet) for tweet in tweets])
     if not nn_model:
+        max_tweet_len = max([len(tweet) for tweet in tweets])
         nn_model = get_nn(max_tweet_len)
 
     # Callbacks (extra features)
@@ -168,7 +179,14 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=3, epsilon=0.2)
 
-    nn_model.fit(tweets, labels, epochs=10, batch_size=100, callbacks=
+    nn_model.fit(tweets, labels, epochs=10, batch_size=32, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
+    print "Saved model"
+    del tweets
+    del labels
+    tweets_test, labels_test, _ = init_with_vocab(type_data='test')
+    print nn_model.evaluate(tweets_test, labels_test, batch_size=32)
+
+train_nn()
 
