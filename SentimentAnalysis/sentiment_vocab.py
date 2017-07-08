@@ -186,7 +186,7 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=2, epsilon=0.1)
 
-    nn_model.fit(tweets, labels, epochs=5, batch_size=32, callbacks=
+    nn_model.fit(tweets, labels, epochs=5, batch_size=100, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
     print "Saved model"
