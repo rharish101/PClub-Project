@@ -17,13 +17,14 @@ vocab = Dictionary.load('SentimentAnalysis/vocab_sentiment')
 def predict(text):
     txt_list = [(vocab.token2id[word] + 1) for word in preprocess_string(text)]
     txt_list = [txt_list]
-    if len(txt_list[0]) < 40:
-        for i in range(40 - len(txt_list[0])):
+    max_tweet_len = 20
+    if len(txt_list[0]) < max_tweet_len:
+        for i in range(max_tweet_len - len(txt_list[0])):
             txt_list[0].append(0)
-    elif len(txt_list[0]) > 40:
-        while len(txt_list[-1]) > 40:
-            txt_list.append(txt_list[-1][40:])
-            txt_list[-2] = txt_list[-2][:40]
+    elif len(txt_list[0]) > max_tweet_len:
+        while len(txt_list[-1]) > max_tweet_len:
+            txt_list.append(txt_list[-1][max_tweet_len:])
+            txt_list[-2] = txt_list[-2][:max_tweet_len]
     prediction = 0
     for txt in txt_list:
         prediction += model.predict(np.array([txt]), batch_size=1)

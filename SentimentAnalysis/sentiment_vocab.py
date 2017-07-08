@@ -95,24 +95,43 @@ def init_with_vocab(tweets=None, labels=None, vocab=None, type_data='train'):
         vocab = get_vocab()
 
     print "Replacing words with vocabulary numbers..."
-    if type_data == 'train':
-        max_tweet_len = max([len(tweet) for tweet in tweets])
-    else:
-        max_tweet_len = 40 #Empirically obtained :P
+    #if type_data == 'train':
+        #max_tweet_len = max([len(tweet) for tweet in tweets])
+    #else:
+        #max_tweet_len = 40 #Empirically obtained :P
+    max_tweet_len = 20
     numbered_tweets = []
-    for tweet_num, tweet in enumerate(tweets):
+    numbered_labels = []
+    for tweet_num, (tweet, label) in enumerate(zip(tweets, labels)):
         current_tweet = []
+
         for word in tweet:
             if word in vocab.token2id:
                 current_tweet.append(vocab.token2id[word] + 1)
-        if len(current_tweet) < max_tweet_len:
+
+        if len(current_tweet) <= max_tweet_len:
             current_tweet_len = len(current_tweet)
             for i in range(max_tweet_len - current_tweet_len):
                 current_tweet.append(0)
-        numbered_tweets.append(current_tweet)
+            numbered_tweets.append(current_tweet)
+            numbered_labels.append(label)
+
+        else:
+            while len(current_tweet) > max_tweet_len:
+                numbered_tweets.append(current_tweet[:max_tweet_len])
+                numbered_labels.append(label)
+                current_tweet = current_tweet[max_tweet_len:]
+            if len(current_tweet) > 1:
+                current_tweet_len = len(current_tweet)
+                for i in range(max_tweet_len - current_tweet_len):
+                    current_tweet.append(0)
+                numbered_tweets.append(current_tweet)
+                numbered_labels.append(label)
+
     print "Replaced words with vocabulary numbers"
     del tweets
-    labels = np.array(labels)
+    labels = np.array(numbered_labels)
+    del numbered_labels
     return (numbered_tweets, labels, len(vocab))
 
 def create_nn(vocab_len=None, max_tweet_len=None):
@@ -129,7 +148,7 @@ def create_nn(vocab_len=None, max_tweet_len=None):
     nn_model.add(LSTM(128))
     nn_model.add(Dense(1, activation='sigmoid'))
 
-    nn_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=[
+    nn_model.compile(loss='binary_crossentropy', optimizer='nadam', metrics=[
                      'accuracy'])
 
     print "Created neural network model"
@@ -163,11 +182,11 @@ def train_nn(tweets=None, labels=None, nn_model=None):
 
     # Callbacks (extra features)
     tb_callback = TensorBoard(log_dir='./Tensorboard/' + str(time.time()))
-    early_stop = EarlyStopping(monitor='loss', min_delta=0.1, patience=10)
+    early_stop = EarlyStopping(monitor='loss', min_delta=0.1, patience=4)
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
-                                patience=3, epsilon=0.2)
+                                patience=2, epsilon=0.1)
 
-    nn_model.fit(tweets, labels, epochs=2, batch_size=32, callbacks=
+    nn_model.fit(tweets, labels, epochs=5, batch_size=32, callbacks=
                 [tb_callback, early_stop, lr_reducer], validation_split=0.2)
     nn_model.save('model_nn.h5')
     print "Saved model"
