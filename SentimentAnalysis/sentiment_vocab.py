@@ -105,7 +105,7 @@ def init_with_vocab(tweets=None, labels=None, vocab=None, type_data='train'):
     for tweet_num, tweet in enumerate(tweets):
         current_tweet = []
         for word in tweet:
-            if word in vocab:
+            if word in vocab.token2id:
                 current_tweet.append(vocab.token2id[word] + 1)
         if len(current_tweet) < max_tweet_len:
             current_tweet_len = len(current_tweet)
@@ -178,5 +178,5 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     tweets_test, labels_test, _ = init_with_vocab(type_data='test')
     print nn_model.evaluate(tweets_test, labels_test, batch_size=32)
 
-train_nn()
+#train_nn()
 
