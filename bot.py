@@ -73,8 +73,11 @@ def friends():
         print(finisher)
         
 def family():
-    print(name+",don't take too much stress all you need to do is adjust your priorities.Don’t take on unnecessary duties and responsibilities.\nTake advice from people whose opinion you trust, and get specific advice when issues arise.\nYou should use stress management techniques and always hope for the best as these situations arise in everyone's life and what matters the most is taking the right decision at such moments.
-")
+    print(name+",don't take too much stress all you need to do is adjust your priorities."\
+          "Don’t take on unnecessary duties and responsibilities.\nTake advice from people "\
+          "whose opinion you trust, and get specific advice when issues arise.\nYou should "\
+          "use stress management techniques and always hope for the best as these situations"\
+          "arise in everyone's life and what matters the most is taking the right decision at such moments.")
     print(finisher)
 
 def work():
