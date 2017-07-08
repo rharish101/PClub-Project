@@ -183,12 +183,12 @@ def train_nn(tweets=None, labels=None, nn_model=None):
 
     # Callbacks (extra features)
     tb_callback = TensorBoard(log_dir='./Tensorboard/' + str(time.time()))
-    early_stop = EarlyStopping(monitor='loss', min_delta=0.01, patience=4)
+    early_stop = EarlyStopping(monitor='loss', min_delta=0.01, patience=6)
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=2, epsilon=0.1)
     saver = ModelCheckpoint('model_nn.h5', monitor='val_acc')
 
-    nn_model.fit(tweets, labels, epochs=25, batch_size=16384, callbacks=
+    nn_model.fit(tweets, labels, epochs=50, batch_size=8192, callbacks=
                  [tb_callback, early_stop, lr_reducer, saver], 
                  validation_split=0.2)
     nn_model.save('model_nn.h5')
