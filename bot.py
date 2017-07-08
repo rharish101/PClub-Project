@@ -31,7 +31,7 @@ def predict(text):
     prediction /= len(txt_list)
     return prediction
 
-finisher = 'It was really nice talking to you and I hope that now you fell better after talking to me.\nBest of luck for your future endeavours.'
+finisher = 'It was really nice talking to you and I hope that now you feel better after talking to me.\nBest of luck for your future endeavours.'
 
 def friends():
     response = input('How are your friends meeting up with your expectations?'\
