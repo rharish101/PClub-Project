@@ -175,7 +175,7 @@
     
         \setlength{\baselineskip}{+8mm}
         
-        \hspace{-7mm}{\fontsize{20}{22}\selectfont  Implementing Sentiment Analysis}\\[-9mm]
+        \hspace{-7mm}{\fontsize{20}{22}\selectfont Coding the tree structure}\\[-9mm]
         	
         	\paragraph{}{\fontsize{15}{18}\Completed the remaining part of sentiment analysis to get a trained model which is to be used in chatbot.Coded the tree structure using python and integrated sentiment analysis in it.  Debugging and testing of chatbot and improving the parameters of sentiment analysis to get better accuracy.
 }\\[+9mm]
