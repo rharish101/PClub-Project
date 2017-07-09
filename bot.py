@@ -11,11 +11,12 @@ except NameError:
     pass
 
 #with tf.device('/cpu:0'):
-model = load_model('SentimentAnalysis/model_nn.h5')
-vocab = Dictionary.load('SentimentAnalysis/vocab_sentiment')
+model = load_model('model_nn.h5')
+vocab = Dictionary.load('vocab_sentiment')
 
 def predict(text):
-    txt_list = [(vocab.token2id[word] + 1) for word in preprocess_string(text)]
+    txt_list = [(vocab.token2id[word] + 1) for word in preprocess_string(text)
+                if word in vocab.token2id.keys()]
     txt_list = [txt_list]
     max_tweet_len = 20
     if len(txt_list[0]) < max_tweet_len:
@@ -182,12 +183,15 @@ def sad3():
 print('\n\nHello! Thanks for coming here. I am a chatbot. People say that '
       'I am a kind and approachable bot.')
 name = input('Please tell me your name.\n')
-name = [word for word in preprocess_string(name) if word not in ('name',
-        'peopl', 'call', 'friend')][0]
+try:
+    name = [word for word in preprocess_string(name) if word not in ('name',
+            'peopl', 'call', 'friend')][0]
+except:
+    pass
 name = name[0].upper() + name[1:]
 print("Hi " + name + "! My name's Brad. Let's start with our session.")
 response = input("How are you doing?\n")
-if (predict(response) >= 0.5):
+if (predict(response) >= 0.55):
     response = input('That is good. Are you usually this happy, or there are some worries that you want to talk about?\n') 
     if (predict(response)>=0.7):
         response = input('You seem to be really content. Wanna sign off?\n')
