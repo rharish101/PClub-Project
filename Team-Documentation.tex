@@ -1,11 +1,11 @@
 \documentclass{report}
 \usepackage{anyfontsize}
 \usepackage{fontspec}
+\usepackage{raleway}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{geometry}
-	\geometry{bottom=0pt}
-
+	\geometry{bottom=0mm}
 \title{Documentation}
 \author{Harish Rajagopal}
 
@@ -17,6 +17,7 @@
 	
     \begin{titlepage}
     	\pagenumbering{gobble}
+    	\newgeometry{bottom=-3.5cm}
     	
     	\tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{light_blue_background.jpg}};
     	
@@ -25,9 +26,10 @@
     	\setlength{\voffset}{-1.5inch}
     	\setlength{\headheight}{0pt}
     	\setlength{\topmargin}{0pt}
+    	\setlength{\footskip}{0cm}
     	\begin{tikzpicture}
     		\useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-    		\node[right] at (5.2cm,5.5cm) {\color{azuremist}\fontsize{50}{60}\selectfont Documentation};
+    		\node[right] at (4.9cm,5.5cm) {\color{azuremist}\fontsize{50}{60}\raleway\selectfont Documentation};
     	\end{tikzpicture}\\[+2cm]
     	
     	\begin{center}
@@ -38,15 +40,19 @@
     		{\fontsize{15}{20}\selectfont Vishwas Lathi\\[+2mm]
     			160808}\\[+2mm]
     		{\fontsize{15}{20}\selectfont Harshit Sharma\\[+2mm]
-    			160283}\\[+1cm]
-    		{\fontsize{13}{18}\selectfont Acknowledgements: Mohammad Daud}\\[+2cm]
+    			160283}\\[+7mm]
+    		{\fontsize{15}{20}\selectfont Mentor\\[+2mm]
+    			Varun Khare}\\[+1cm]
+    		{\fontsize{13}{18}\selectfont Acknowledgements: Mohammad Daud}\\[+3cm]
     		\includegraphics*[scale=0.3]{iitklogo.png}
     	\end{center}
+    	\restoregeometry
     
     \end{titlepage}
     
     \newpage
     \pagenumbering{arabic}
+    \newgeometry{bottom=0pt}
     
     \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{light_blue_background.jpg}};
     
@@ -57,17 +63,40 @@
     \setlength{\topmargin}{0pt}
     \begin{tikzpicture}
     \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-    \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\selectfont Week 1};
+    \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Features};
     \end{tikzpicture}\\[+2cm]
     
         \setlength{\baselineskip}{+8mm}
         
-        \hspace{-7mm}{\fontsize{20}{22}\selectfont Coursera - Intro to Machine Learning}\\[-9mm]
+        \hspace{-7mm}{\fontsize{20}{22}\selectfont Sentiment Analysis}\\[-9mm]
         	
-        	\paragraph{}{\fontsize{15}{18}\selectfont Completed chapters from the course by Andrew Ng on Coursera from Stanford University, pertaining mostly to supervised learning, including Linear Regression, Polynomial Multivariate Regression, Logistic Regression, Neural Networks and Back-propagation, Support Vector Machines, etc.}\\[+9mm]
+        	\paragraph{}{\fontsize{15}{18}\selectfont Sentiment Analysis refers to the use of natural language processing, text analysis and  computational linguistics to study the subjective states of the text presented. Using datasets freely available online, we can train models and then use Sentiment Analysis to find out if the user’s response is positive, neutral or negative, and thus decide the virtual therapist’s responses.}\\[+9mm]
         
-        \hspace{-7mm}{\fontsize{20}{22}\selectfont Udacity - Intro to Machine Learning}\\[-9mm]
-        	\paragraph{}{\fontsize{15}{18}\selectfont Completed chapter on text learning from Introduction to Machine Learning course on Udacity, based on preprocessing of text by tokenisation of document, removal of stopwords, word stemming and term-frequency inverse-term-frequency (tf-idf) representation of documents using the python libraries scikit-learn and NLTK.}
+        \hspace{-7mm}{\fontsize{20}{22}\selectfont Cognitive Behavioural Therapy}\\[-9mm]
+        	\paragraph{}{\fontsize{15}{18}\selectfont Cognitive behavioral therapy (CBT) is a type of psychotherapy in which negative patterns of thought about the self and the world are challenged in order to alter unwanted behaviour patterns or treat mood disorders such as depression. Using transcripts of therapy sessions, we can build the virtual human so that it can provide effective counselling.}
+     
+     \newpage
+     
+     \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{light_blue_background.jpg}};
+     
+     \hspace{-4.8cm}
+     \setlength{\headsep}{0pt}
+     \setlength{\voffset}{-1.5inch}
+     \setlength{\headheight}{0pt}
+     \setlength{\topmargin}{0pt}
+     \begin{tikzpicture}
+     \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 1};
+     \end{tikzpicture}\\[+2cm]
+     
+     \setlength{\baselineskip}{+8mm}
+     
+     \hspace{-7mm}{\fontsize{20}{22}\selectfont Coursera - Intro to Machine Learning}\\[-9mm]
+     
+     \paragraph{}{\fontsize{15}{18}\selectfont Completed chapters from the course by Andrew Ng on Coursera from Stanford University, pertaining mostly to supervised learning, including Linear Regression, Polynomial Multivariate Regression, Logistic Regression, Neural Networks and Back-propagation, Support Vector Machines, etc.}\\[+9mm]
+     
+     \hspace{-7mm}{\fontsize{20}{22}\selectfont Udacity - Intro to Machine Learning}\\[-9mm]
+     \paragraph{}{\fontsize{15}{18}\selectfont Completed chapter on text learning from Introduction to Machine Learning course on Udacity, based on preprocessing of text by tokenisation of document, removal of stopwords, word stemming and term-frequency inverse-term-frequency (tf-idf) representation of documents using the python libraries scikit-learn and NLTK.}
         
      \newpage
      
@@ -80,7 +109,7 @@
      \setlength{\topmargin}{0pt}
      \begin{tikzpicture}
      \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\selectfont Week 2};
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 2};
      \end{tikzpicture}\\[+2cm]
      
      \setlength{\baselineskip}{+8mm}
@@ -103,7 +132,7 @@
      \setlength{\topmargin}{0pt}
      \begin{tikzpicture}
      \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\selectfont Week 3};
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 3};
      \end{tikzpicture}\\[+2cm]
      
      \setlength{\baselineskip}{+8mm}
@@ -125,7 +154,7 @@
      \setlength{\topmargin}{0pt}
      \begin{tikzpicture}
      \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\selectfont Week 4};
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 4};
      \end{tikzpicture}\\[+2cm]
      
      \setlength{\baselineskip}{+8mm}
@@ -149,7 +178,7 @@
      \setlength{\topmargin}{0pt}
      \begin{tikzpicture}
      \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\selectfont Week 5};
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 5};
      \end{tikzpicture}\\[+2cm]
      
      \setlength{\baselineskip}{+8mm}
@@ -173,7 +202,7 @@
      \setlength{\topmargin}{0pt}
      \begin{tikzpicture}
      \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
-     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\selectfont Week 6};
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 6};
      \end{tikzpicture}\\[+2cm]
      
      \setlength{\baselineskip}{+8mm}
