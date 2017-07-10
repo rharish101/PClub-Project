@@ -86,6 +86,61 @@
      \setlength{\topmargin}{0pt}
      \begin{tikzpicture}
      \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Model};
+     \end{tikzpicture}\\[+2cm]
+     
+     \setlength{\baselineskip}{+8mm}
+     
+     \hspace{-7mm}{\fontsize{20}{22}\selectfont Dataset}\\[-9mm]
+     
+     \paragraph{}{\fontsize{15}{18}\selectfont 1.6 million tweets from twitter, classified into positive (4) and negative (0), as the training data, of which 20\% is used as cross validation data. 494 tweets from twitter, classified into positive (4), neutral (2) and negative (0), as the test data. Labels adjusted to be in the range 0 to 1.}\\[-8mm]
+     
+     \paragraph{}{\fontsize{15}{18}\selectfont Hashtags, website links and user references removed, then input tweets preprocessed by Gensim, with preprocessed tweets of length less than two removed. Vocabulary of words initialised with Gensim Dictionary and words replaced with respective posiiton in the vocabulary plus one.}\\[-8mm]
+     
+     \paragraph{}{\fontsize{15}{18}\selectfont Preprocessed tweets of length less than 20 were zero-padded to length 20. Those of length greater than 20 were split into tweets of length 20 and the last split part zero-padded, if necessary. Zero-padding done for supplying variable length sequences to the LSTM layer.}\\[-8mm]
+     
+     \newpage
+     
+     \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{light_blue_background.jpg}};
+     
+     \hspace{-4.8cm}
+     \setlength{\headsep}{0pt}
+     \setlength{\voffset}{-1.5inch}
+     \setlength{\headheight}{0pt}
+     \setlength{\topmargin}{0pt}
+     \begin{tikzpicture}
+     \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
+     \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Model};
+     \end{tikzpicture}\\[+2cm]
+     
+     \setlength{\baselineskip}{+8mm}
+     
+     \hspace{-7mm}{\fontsize{20}{22}\selectfont Neural Network Architecture}\\[-4mm]
+     \begin{enumerate}
+     	
+     	{\fontsize{15}{18}\selectfont \item Embedding layer with zero-masking to output word vectors of 32 dimensions for each word in the vocabulary, and a zero vector for zero-padded words.}\\[-6mm]
+     	
+     	{\fontsize{15}{18}\selectfont \item LSTM layer with 128 dimensional output.}\\[-6mm]
+     	
+     	{\fontsize{15}{18}\selectfont \item Fully connected output layer with 1 neuron and sigmoid activation function.}
+     	
+     \end{enumerate}
+     {\fontsize{15}{18}\selectfont Neural network uses binary cross-entropy loss function and the Adam optimizer with default parameters, but with Nesterov momentum.}\\[-3mm]
+     
+     \vspace{+9mm}\hspace{-7mm}{\fontsize{20}{22}\selectfont Results}\\[-9mm]
+     \paragraph{}{\fontsize{15}{18}\selectfont Current results show accuracy of 84.14\% on the training data, accuracy of 83.32\% on the cross validation data and accuracy of 60.17\% on the test data.}
+     
+     \newpage
+     
+     \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{light_blue_background.jpg}};
+     
+     \hspace{-4.8cm}
+     \setlength{\headsep}{0pt}
+     \setlength{\voffset}{-1.5inch}
+     \setlength{\headheight}{0pt}
+     \setlength{\topmargin}{0pt}
+     \begin{tikzpicture}
+     \useasboundingbox [fill=azure] (0cm,3.5cm) rectangle (22cm,10cm);
      \node[right] at (3.2cm,5cm) {\color{azuremist}\fontsize{35}{40}\raleway\selectfont Week 1};
      \end{tikzpicture}\\[+2cm]
      
