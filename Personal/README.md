@@ -1,8 +1,9 @@
 # PClub-Project Personal Learning Progress
 Personal progress for the Programming Club IITK project
 
-**Note**:
-This folder will be deleted soon
+**Notes**:
+* This folder will be deleted soon
+* My solutions to the programming assignments related to the Coursera course are on a separate public repository.
 
 Contents
 --------

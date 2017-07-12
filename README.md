@@ -8,6 +8,3 @@ Contents
 * *Team-Documentation.tex* : The .tex file used to create *Team-Documentation.pdf*
 * *Presentation.pptx* : The mid-term presentation for the project
 * SentimentAnalysis : The datasets and python files for sentiment analysis
-
-**Note**:
-* My solutions to the programming assignments related to the Coursera course are on a separate public repository.
