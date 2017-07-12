@@ -3,16 +3,25 @@ from __future__ import print_function
 from gensim.parsing.preprocessing import preprocess_string
 from gensim.corpora.dictionary import Dictionary
 from keras.models import load_model
-#import tensorflow as tf
 import numpy as np
+import os
+import subprocess
 try:
     input = raw_input
 except NameError:
     pass
 
-#with tf.device('/cpu:0'):
-model = load_model('model_nn.h5')
-vocab = Dictionary.load('vocab_sentiment')
+try:
+    model = load_model('SentimentAnalysis/model_nn.h5')
+except IOError:
+    if 'model_nn.tar.gz' not in os.listdir('SentimentAnalysis'):
+        raise IOError("Could not find Sentiment Analysis model. Ensure model "\
+                      "is present in: ./SentimentAnalysis")
+    else:
+        subprocess.Popen("cd SentimentAnalysis/; tar -zxf model_nn.tar.gz; "\
+                         "cd ..", shell=True)
+        model = load_model('SentimentAnalysis/model_nn.h5')
+vocab = Dictionary.load('SentimentAnalysis/vocab_sentiment')
 
 def predict(text):
     txt_list = [(vocab.token2id[word] + 1) for word in preprocess_string(text)
