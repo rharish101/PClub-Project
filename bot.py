@@ -18,8 +18,10 @@ except IOError:
         raise IOError("Could not find Sentiment Analysis model. Ensure model "\
                       "is present in: ./SentimentAnalysis")
     else:
-        subprocess.Popen("cd SentimentAnalysis/; tar -zxf model_nn.tar.gz; "\
-                         "cd ..", shell=True)
+        process = subprocess.Popen("cd SentimentAnalysis/; "\
+                                   "tar -zxf model_nn.tar.gz; cd ..",
+                                   shell=True, stdout=subprocess.PIPE)
+        process.wait()
         model = load_model('SentimentAnalysis/model_nn.h5')
 vocab = Dictionary.load('SentimentAnalysis/vocab_sentiment')
 
