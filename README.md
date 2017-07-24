@@ -8,3 +8,7 @@ Contents
 * *Team-Documentation.tex* : The .tex file used to create *Team-Documentation.pdf*
 * *Presentation.pptx* : The mid-term presentation for the project
 * SentimentAnalysis : The datasets and python files for sentiment analysis
+
+Messenger Bot
+-------------
+Facebook page: *https://www.facebook.com/Chatbot-1397347030333501/*
