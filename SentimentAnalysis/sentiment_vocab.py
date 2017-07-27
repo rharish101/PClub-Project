@@ -7,8 +7,9 @@ from gensim.parsing.preprocessing import preprocess_string, strip_punctuation,\
                                          stem_text
 from gensim.corpora.dictionary import Dictionary
 from keras.models import Sequential, load_model
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from keras.layers.recurrent import LSTM
+from keras.regularizers import l2
 from keras.layers.embeddings import Embedding
 from keras.callbacks import TensorBoard, EarlyStopping, ReduceLROnPlateau,\
                             ModelCheckpoint
@@ -34,7 +35,9 @@ def export(type_data='train'):
         new_tweet = ' '.join([word for word in tweet.split(' ') if len(word)\
                             > 0 and word[0] not in ['@', '#'] and 'http' not\
                             in word]).strip()
-        pro_tweet = preprocess_string(new_tweet)
+        pro_tweet = [word[:-3] if word[-3:] == 'xxx' else word for word in
+                    preprocess_string(new_tweet.replace('not', 'notxxx'))]
+        #pro_tweet = preprocess_string(new_tweet)
         if len(pro_tweet) < 2:
             tweets[i] = strip_punctuation(stem_text(new_tweet.lower())).\
                         strip().split()
@@ -72,10 +75,23 @@ def create_vocab(tweets):
 
 def get_vocab(tweets=None):
     if 'vocab_sentiment' in os.listdir('.'):
-        print "Loading vocabulary..."
-        vocab = Dictionary.load('vocab_sentiment')
-        print "Loaded vocabulary"
-        return vocab
+        if not tweets:
+            print "Loading vocabulary..."
+            vocab = Dictionary.load('vocab_sentiment')
+            print "Loaded vocabulary"
+            return vocab
+        response = raw_input('Vocabulary found. Do you want to load it? (Y/n)'\
+                             ': ')
+        if response.lower() in ['n', 'no', 'nah', 'nono', 'nahi', 'nein']:
+            if not tweets:
+                tweets, labels = export()
+                del labels
+            return create_vocab(tweets)
+        else:
+            print "Loading vocabulary..."
+            vocab = Dictionary.load('vocab_sentiment')
+            print "Loaded vocabulary"
+            return vocab
     else:
         if not tweets:
             tweets, labels = export()
@@ -147,6 +163,8 @@ def create_nn(vocab_len=None, max_tweet_len=None):
     nn_model.add(Embedding(input_dim=(vocab_len + 1), output_dim=32,
                            mask_zero=True))
     nn_model.add(LSTM(128))
+    nn_model.add(Dense(32, activation='sigmoid', kernel_regularizer=l2(0.05)))
+    nn_model.add(Dropout(0.3))
     nn_model.add(Dense(1, activation='sigmoid'))
 
     nn_model.compile(loss='binary_crossentropy', optimizer='nadam', metrics=[
@@ -183,14 +201,17 @@ def train_nn(tweets=None, labels=None, nn_model=None):
 
     # Callbacks (extra features)
     tb_callback = TensorBoard(log_dir='./Tensorboard/' + str(time.time()))
-    early_stop = EarlyStopping(monitor='loss', min_delta=0.01, patience=6)
+    early_stop = EarlyStopping(monitor='loss', min_delta=0.025, patience=6)
     lr_reducer = ReduceLROnPlateau(monitor='loss', factor=0.5, min_lr=0.00001,
                                 patience=2, epsilon=0.1)
     saver = ModelCheckpoint('model_nn.h5', monitor='val_acc')
 
-    nn_model.fit(tweets, labels, epochs=50, batch_size=8192, callbacks=
-                 [tb_callback, early_stop, lr_reducer, saver], 
-                 validation_split=0.2)
+    try:
+        nn_model.fit(tweets, labels, epochs=50, batch_size=8192, callbacks=
+                    [tb_callback, early_stop, lr_reducer, saver], 
+                    validation_split=0.2)
+    except KeyboardInterrupt:
+        pass
     nn_model.save('model_nn.h5')
     print "Saved model"
     del tweets
@@ -198,5 +219,5 @@ def train_nn(tweets=None, labels=None, nn_model=None):
     tweets_test, labels_test, _ = init_with_vocab(type_data='test')
     print nn_model.evaluate(tweets_test, labels_test, batch_size=32)
 
-train_nn()
-
+if __name__ == '__main__':
+    train_nn()
