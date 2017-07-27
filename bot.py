@@ -26,7 +26,9 @@ except IOError:
 vocab = Dictionary.load('SentimentAnalysis/vocab_sentiment')
 
 def predict(text):
-    txt_list = [(vocab.token2id[word] + 1) for word in preprocess_string(text)
+    preprocessed = [word[:-3] if word[-3:] == 'xxx' else word for word in
+                    preprocess_string(text.replace('not', 'notxxx'))]
+    txt_list = [(vocab.token2id[word] + 1) for word in preprocessed
                 if word in vocab.token2id.keys()]
     txt_list = [txt_list]
     max_tweet_len = 20
