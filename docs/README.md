@@ -96,9 +96,15 @@ We're just some college kids, and this is our programming project. We only colle
 If there are any questions regarding this privacy policy, you may contact us using the information below.
 
 https://www.facebook.com/Chatbot-1397347030333501/
+
 IIT Kanpur
+
 Kanpur, Uttar Pradesh 208016
+
 India
+
 harish.rajagopals@gmail.com
+
 lathivishwas@gmail.com
+
 Last Edited on 2017-08-06
