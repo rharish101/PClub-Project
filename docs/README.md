@@ -1,4 +1,4 @@
-# https://www.facebook.com/chatbot-1397347030333501/ Privacy Policy
+# https://www.facebook.com/Chatbot.Brad Privacy Policy
 
 This privacy policy has been compiled to better serve those who are concerned with how their 'Personally Identifiable Information' (PII) is being used online. PII, as described in US privacy law and information security, is information that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Please read our privacy policy carefully to get a clear understanding of how we collect, use, protect or otherwise handle your Personally Identifiable Information in accordance with our website.
 
@@ -89,7 +89,11 @@ We also agree to the Individual Redress Principle which requires that individual
 
 **Data Collection and Removal**
 
-We're just some college kids, and this is our programming project. We only collect the following data: 1. The name provided by the user. 2. The state of the conversation between the bot and the user. The user can erase this data by responding to the bot using the exact response message (Case-sensitive, without double quotes): "COMMAND RESET". This will result in removal of the user's name and the state of the conversation, thus one can start the conversation from scratch, or forget about the bot.
+We're just some college kids, and this is our programming project. We only collect the following data:
+
+1. The name provided by the user.
+2. The state of the conversation between the bot and the user. The user can erase this data by responding to the bot using the exact response message (Case-sensitive, without double quotes): "COMMAND RESET". This will result in removal of the user's name and the state of the conversation, thus one can start the conversation from scratch, or forget about the bot.
+3. Time of the user's last response.
 
 **Contacting Us**
 
@@ -107,4 +111,4 @@ harish.rajagopals@gmail.com
 
 lathivishwas@gmail.com
 
-Last Edited on 2017-08-06
+Last Edited on 10th August 2017
