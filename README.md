@@ -8,7 +8,6 @@ Contents
 * *Team-Documentation.tex* : The .tex file used to create *Team-Documentation.pdf*
 * *Presentation.pptx* : The mid-term presentation for the project
 * SentimentAnalysis : The datasets and python files for sentiment analysis
-* Heroku : The Heroku repository contents for the Messenger bot
 * docs : The privacy policy for the Messenger bot.
 
 Messenger Bot
