@@ -27,7 +27,7 @@ vocab = Dictionary.load('SentimentAnalysis/vocab_sentiment')
 
 def predict(text):
     preprocessed = [word[:-3] if word[-3:] == 'xxx' else word for word in
-                    preprocess_string(text.replace('not', 'notxxx'))]
+                    preprocess_string(text.lower().replace('not', 'notxxx'))]
     txt_list = [(vocab.token2id[word] + 1) for word in preprocessed
                 if word in vocab.token2id.keys()]
     txt_list = [txt_list]
@@ -88,7 +88,7 @@ def friends():
               "accept the fact that nobody is perfect and that everyone "\
               "makes mistakes every now and then.")
         print(finisher)
-        
+
 def family():
     print(name + ", don't take too much stress. All you need to do is adjust "\
           "your priorities. Don't take on unnecessary duties and "\
@@ -125,7 +125,7 @@ def sad1():
                 print("That's okay. It was nice talking to you. You can chat "\
                       "with me anytime you want.\nBye " + name + "!")
             else:
-                sad3() 
+                sad3()
         else:
             sad3()
     else:
@@ -175,7 +175,7 @@ def sad3():
         sad2()
     else:
         sad4()
-    
+
 def sad4():
     print("My sympathies. Looks like it might be a point of concern. Don't "\
           "worry, that's what I'm here for!")
@@ -205,14 +205,14 @@ print("Hi " + name + "! My name's Brad. Let's start with our session.")
 response = input("How are you doing?\n")
 if (predict(response) >= 0.55):
     response = input('That is good. Are you usually this happy, or are there '\
-                     'some worries that you want to talk about?\n') 
+                     'some worries that you want to talk about?\n')
     if (predict(response)>=0.7):
         response = input('You seem to be really content. Wanna sign off?\n')
         if(predict(response)>=0.7):
             print('Ok, bye ' + name + '!')
         else:
             response = input('Is there something bothering you? Would you '\
-                             'share it with me?\n') 
+                             'share it with me?\n')
             if(predict(response)>=0.7):
                 print("That's okay. It was nice talking to you. You can chat "\
                       "with me anytime you want.\n Bye" + name + "!")
