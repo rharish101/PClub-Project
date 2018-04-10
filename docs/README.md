@@ -95,6 +95,8 @@ We're just some college kids, and this is our programming project. We only colle
 2. The state of the conversation between the bot and the user. The user can erase this data by responding to the bot using the exact response message (Case-sensitive, without double quotes): "COMMAND RESET". This will result in removal of the user's name and the state of the conversation, thus one can start the conversation from scratch, or forget about the bot.
 3. Time of the user's last response.
 
+Also, Facebook stores all your chat history in the Facebook page for our Chatbot. Only the Facebook page admin has access to your chats.
+
 **Contacting Us**
 
 If there are any questions regarding this privacy policy, you may contact us using the information below.
@@ -111,4 +113,4 @@ harish.rajagopals@gmail.com
 
 lathivishwas@gmail.com
 
-Last Edited on 10th August 2017
+Last Edited on 10th April 2018
